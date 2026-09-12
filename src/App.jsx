@@ -6,6 +6,7 @@ import IncidentReport from './components/IncidentReport';
 import AnalysisResult from './components/AnalysisResult';
 import CommandCenter from './components/CommandCenter';
 import EmergencyCommanderChat from './components/EmergencyCommanderChat';
+import Toast from './components/Toast';
 import { DEMO_INCIDENTS } from './data/demoIncidents';
 
 export default function App() {
@@ -17,6 +18,11 @@ export default function App() {
   const [error, setError] = useState(null);
   const [commanderOpen, setCommanderOpen] = useState(false);
   const [apiStatus, setApiStatus] = useState({ geminiConfigured: false, online: false });
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, type = 'info') => {
+    setToast({ message, type });
+  };
 
   // Fetch backend health status on mount
   useEffect(() => {
@@ -54,9 +60,11 @@ export default function App() {
 
       setCurrentAnalysis(result);
       setActiveTab('result');
+      showToast('Gemini AI Emergency Analysis Complete!', 'success');
     } catch (err) {
       console.error('Analysis error:', err);
       setError(err.message || 'An unexpected error occurred during Gemini analysis.');
+      showToast('Analysis failed. Please check connection.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -83,6 +91,7 @@ export default function App() {
 
     setIncidents(prev => [newIncident, ...prev]);
     setActiveTab('command');
+    showToast(`Incident #${newIncident.id} Dispatched to Command Center!`, 'success');
   };
 
   const handleResetReport = () => {
@@ -93,7 +102,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0B0F19] text-slate-100 selection:bg-red-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#070A12] text-slate-100 selection:bg-red-500 selection:text-white bg-radial-gradient">
       
       {/* Top Navbar */}
       <Navbar 
@@ -146,6 +155,9 @@ export default function App() {
         onClose={() => setCommanderOpen(false)}
         incidents={incidents}
       />
+
+      {/* Notification Toast */}
+      <Toast toast={toast} onClose={() => setToast(null)} />
 
       {/* Global Footer */}
       <Footer setActiveTab={setActiveTab} />
