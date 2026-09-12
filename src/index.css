@@ -3,69 +3,90 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+  }
+
+  html.dark {
+    --bg-main: #090d16;
+    --text-main: #f8fafc;
+  }
+
   body {
-    background-color: #070a12;
-    color: #f8fafc;
+    background-color: var(--bg-main);
+    color: var(--text-main);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
   }
 }
 
-/* Glassmorphism & Tactical Cyber Panels */
+/* Glassmorphism & SaaS Card Utilities for Light & Dark Themes */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(26, 35, 58, 0.6) 0%, rgba(11, 17, 30, 0.7) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(59, 130, 246, 0.18);
-  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.25s ease-in-out;
+}
+
+html.dark .glass-card {
+  background: linear-gradient(135deg, rgba(21, 30, 49, 0.75) 0%, rgba(13, 19, 33, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
 }
 
 .glass-card:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 14px 45px -10px rgba(6, 182, 212, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 30px -4px rgba(59, 130, 246, 0.12);
   transform: translateY(-2px);
 }
 
-.glass-card-critical {
-  background: linear-gradient(135deg, rgba(69, 10, 10, 0.4) 0%, rgba(15, 23, 42, 0.7) 100%);
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.15);
-}
-
-/* Glowing Neon Highlights */
-.glow-red {
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.35);
-}
-
-.glow-cyan {
-  box-shadow: 0 0 25px rgba(6, 182, 212, 0.3);
-}
-
-.glow-amber {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+html.dark .glass-card:hover {
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 12px 35px -10px rgba(6, 182, 212, 0.15);
 }
 
 /* Custom Tactical Background Grids */
 .bg-grid-cyber {
-  background-size: 36px 36px;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+html.dark .bg-grid-cyber {
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 .bg-radial-gradient {
-  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.12) 0%, rgba(239, 68, 68, 0.05) 50%, transparent 100%);
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
 }
 
-/* Radar Sweep Animation for Image Processing */
+html.dark .bg-radial-gradient {
+  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.1) 0%, rgba(239, 68, 68, 0.04) 50%, transparent 100%);
+}
+
+/* Radar Sweep Line Animation for Image Processing */
 @keyframes radarSweep {
   0% {
     top: 0%;
@@ -85,9 +106,9 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background: linear-gradient(90deg, transparent 0%, #06b6d4 50%, transparent 100%);
-  box-shadow: 0 0 20px #06b6d4, 0 0 40px #06b6d4;
+  box-shadow: 0 0 15px #06b6d4;
   animation: radarSweep 2.2s ease-in-out infinite;
 }
 
@@ -95,11 +116,11 @@
 @keyframes pulseBeacon {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
   }
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
   }
   100% {
     transform: scale(0.95);
@@ -109,20 +130,4 @@
 
 .beacon-red {
   animation: pulseBeacon 2s infinite;
-}
-
-/* Shimmer animation for loading states */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
 }

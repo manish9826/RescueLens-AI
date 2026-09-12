@@ -1,56 +1,54 @@
 import React from 'react';
-import { ShieldAlert, Activity, Bot, PlusCircle, LayoutDashboard, Cpu, Sparkles } from 'lucide-react';
+import { ShieldAlert, Activity, Bot, PlusCircle, LayoutDashboard, Sparkles, Info } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ activeTab, setActiveTab, apiStatus, toggleCommanderChat, commanderOpen }) {
   return (
-    <header className="sticky top-0 z-40 bg-[#070A12]/90 backdrop-blur-xl border-b border-slate-800/80 shadow-2xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="w-full sticky top-0 z-40 bg-white/90 dark:bg-[#090D16]/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo */}
           <div 
             onClick={() => setActiveTab('landing')} 
-            className="flex items-center gap-3 cursor-pointer group select-none"
+            className="flex items-center gap-3 cursor-pointer group select-none shrink-0"
           >
-            <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-red-600 via-rose-600 to-red-700 text-white shadow-lg shadow-red-600/30 group-hover:scale-105 transition-all">
-              <ShieldAlert className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full animate-ping" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full border-2 border-slate-950" />
+            <div className="relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-red-600 to-rose-700 text-white shadow-md shadow-red-600/20 group-hover:scale-105 transition-transform">
+              <ShieldAlert className="w-5 h-5" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-cyan-400 rounded-full animate-ping" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-cyan-400 rounded-full border-2 border-white dark:border-slate-950" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">
-                  RescueLens <span className="text-red-500 font-mono">AI</span>
-                </span>
-                <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-300">
-                  <Sparkles className="w-3 h-3 text-cyan-400" /> Gemini Powered
+                <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                  RescueLens <span className="text-red-600 dark:text-red-500 font-mono">AI</span>
                 </span>
               </div>
-              <span className="block text-[10px] text-slate-400 font-mono tracking-wider uppercase">
-                Emergency Intelligence Platform
+              <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">
+                Emergency Intelligence
               </span>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-slate-900/80 border border-slate-800 p-1.5 rounded-2xl shadow-inner">
+          {/* Center Navigation Bar */}
+          <nav className="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 p-1.5 rounded-2xl">
             <button
               onClick={() => setActiveTab('landing')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
                 activeTab === 'landing'
-                  ? 'bg-slate-800 text-white shadow-md border border-slate-700'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-slate-700'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/40'
               }`}
             >
-              Overview
+              Home
             </button>
 
             <button
               onClick={() => setActiveTab('report')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 activeTab === 'report' || activeTab === 'result'
-                  ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/40'
+                  ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
+                  : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-800/40'
               }`}
             >
               <PlusCircle className="w-3.5 h-3.5" />
@@ -59,50 +57,50 @@ export default function Navbar({ activeTab, setActiveTab, apiStatus, toggleComma
 
             <button
               onClick={() => setActiveTab('command')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 transition-all ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
                 activeTab === 'command'
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/40'
               }`}
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
               Command Center
             </button>
-          </nav>
 
-          {/* Right Action Controls */}
-          <div className="flex items-center gap-3">
-            {/* Gemini Live API Status Indicator */}
-            <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono">
-              <span className={`w-2 h-2 rounded-full ${apiStatus?.geminiConfigured ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-              <span className="text-[11px] text-slate-300">
-                {apiStatus?.geminiConfigured ? 'Gemini Live' : 'Demo Mode'}
-              </span>
-            </div>
-
-            {/* Toggle Emergency Commander Button */}
             <button
               onClick={toggleCommanderChat}
-              className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
-                commanderOpen 
-                  ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/40 ring-2 ring-cyan-400/50'
-                  : 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 hover:border-cyan-500/60'
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                commanderOpen
+                  ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/20'
+                  : 'text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40'
               }`}
             >
-              <Bot className="w-4 h-4 text-cyan-400 animate-pulse" />
-              <span className="hidden sm:inline">Emergency Commander</span>
+              <Bot className="w-3.5 h-3.5" />
+              Emergency Commander
             </button>
+          </nav>
+
+          {/* Right Controls Bar */}
+          <div className="flex items-center gap-3 shrink-0">
+            {/* Gemini Powered Badge */}
+            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 dark:bg-cyan-950/80 border border-cyan-200 dark:border-cyan-500/30 text-xs text-cyan-800 dark:text-cyan-300 font-mono font-medium">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+              Gemini Powered
+            </div>
+
+            {/* Dark / Light Mode Toggle */}
+            <ThemeToggle />
           </div>
 
         </div>
       </div>
-      
-      {/* Mobile Tab Bar */}
-      <div className="md:hidden flex border-t border-slate-800/80 bg-slate-950 px-2 py-2 justify-around">
+
+      {/* Mobile Tab Navigation */}
+      <div className="md:hidden flex border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-2 py-2 justify-around">
         <button
           onClick={() => setActiveTab('landing')}
           className={`px-3 py-1.5 rounded-xl text-xs font-medium ${
-            activeTab === 'landing' ? 'bg-slate-800 text-white' : 'text-slate-400'
+            activeTab === 'landing' ? 'bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'
           }`}
         >
           Home
@@ -110,7 +108,7 @@ export default function Navbar({ activeTab, setActiveTab, apiStatus, toggleComma
         <button
           onClick={() => setActiveTab('report')}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-medium ${
-            activeTab === 'report' || activeTab === 'result' ? 'bg-red-600 text-white' : 'text-slate-400'
+            activeTab === 'report' || activeTab === 'result' ? 'bg-red-600 text-white' : 'text-slate-600 dark:text-slate-400'
           }`}
         >
           Report
@@ -118,10 +116,16 @@ export default function Navbar({ activeTab, setActiveTab, apiStatus, toggleComma
         <button
           onClick={() => setActiveTab('command')}
           className={`px-3.5 py-1.5 rounded-xl text-xs font-medium ${
-            activeTab === 'command' ? 'bg-blue-600 text-white' : 'text-slate-400'
+            activeTab === 'command' ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'
           }`}
         >
           Command
+        </button>
+        <button
+          onClick={toggleCommanderChat}
+          className="px-3 py-1.5 rounded-xl text-xs font-medium text-cyan-700 dark:text-cyan-400 flex items-center gap-1"
+        >
+          <Bot className="w-3.5 h-3.5" /> AI
         </button>
       </div>
     </header>

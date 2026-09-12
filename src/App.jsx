@@ -102,9 +102,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#070A12] text-slate-100 selection:bg-red-500 selection:text-white bg-radial-gradient">
+    <div className="min-h-screen w-full flex flex-col bg-slate-50 dark:bg-[#090D16] text-slate-900 dark:text-slate-100 selection:bg-red-500 selection:text-white transition-colors">
       
-      {/* Top Navbar */}
+      {/* Full-width Top Navbar */}
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
@@ -113,8 +113,8 @@ export default function App() {
         commanderOpen={commanderOpen}
       />
 
-      {/* Main View Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Main Container - Edge to Edge */}
+      <main className="flex-1 w-full flex flex-col items-center">
         {activeTab === 'landing' && (
           <LandingPage 
             setActiveTab={setActiveTab} 
@@ -123,29 +123,35 @@ export default function App() {
         )}
 
         {(activeTab === 'report' || (activeTab === 'result' && !currentAnalysis)) && (
-          <IncidentReport 
-            onAnalyze={handleAnalyze} 
-            isLoading={isLoading} 
-            error={error} 
-          />
+          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <IncidentReport 
+              onAnalyze={handleAnalyze} 
+              isLoading={isLoading} 
+              error={error} 
+            />
+          </div>
         )}
 
         {activeTab === 'result' && currentAnalysis && (
-          <AnalysisResult 
-            result={currentAnalysis}
-            image={currentImage}
-            onDispatch={handleDispatchToCommandCenter}
-            onReset={handleResetReport}
-            toggleCommanderChat={() => setCommanderOpen(true)}
-          />
+          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <AnalysisResult 
+              result={currentAnalysis}
+              image={currentImage}
+              onDispatch={handleDispatchToCommandCenter}
+              onReset={handleResetReport}
+              toggleCommanderChat={() => setCommanderOpen(true)}
+            />
+          </div>
         )}
 
         {activeTab === 'command' && (
-          <CommandCenter 
-            incidents={incidents}
-            onSelectReport={(inc) => console.log('Selected:', inc)}
-            toggleCommanderChat={() => setCommanderOpen(true)}
-          />
+          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <CommandCenter 
+              incidents={incidents}
+              onSelectReport={(inc) => console.log('Selected:', inc)}
+              toggleCommanderChat={() => setCommanderOpen(true)}
+            />
+          </div>
         )}
       </main>
 
@@ -159,7 +165,7 @@ export default function App() {
       {/* Notification Toast */}
       <Toast toast={toast} onClose={() => setToast(null)} />
 
-      {/* Global Footer */}
+      {/* Full-width Global Footer */}
       <Footer setActiveTab={setActiveTab} />
 
     </div>
