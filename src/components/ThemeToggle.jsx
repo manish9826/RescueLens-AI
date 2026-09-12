@@ -4,7 +4,7 @@ import { Sun, Moon } from 'lucide-react';
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem('rescuelens_theme');
-    return saved ? saved === 'dark' : true; // Default dark
+    return saved ? saved === 'dark' : true;
   });
 
   useEffect(() => {
@@ -23,19 +23,19 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setIsDark(!isDark)}
-      aria-label="Toggle theme"
-      className="p-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-all flex items-center gap-2 text-xs font-semibold select-none shadow-sm"
+      aria-label="Toggle light/dark mode theme"
+      className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:border-cyan-500 transition-all flex items-center gap-1.5 text-xs font-bold font-mono shadow-sm select-none"
       title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
     >
       {isDark ? (
         <>
-          <Sun className="w-4 h-4 text-amber-400" />
-          <span className="hidden sm:inline text-[11px] font-mono">Light</span>
+          <Sun className="w-3.5 h-3.5 text-amber-400" />
+          <span>☀ Light</span>
         </>
       ) : (
         <>
-          <Moon className="w-4 h-4 text-indigo-600" />
-          <span className="hidden sm:inline text-[11px] font-mono">Dark</span>
+          <Moon className="w-3.5 h-3.5 text-indigo-600" />
+          <span>☾ Dark</span>
         </>
       )}
     </button>
