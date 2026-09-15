@@ -25,6 +25,13 @@ dist-ssr/
 .env.test.local
 .env.production.local
 
+# Database
+database.sqlite
+server/database.sqlite
+*.sqlite
+*.sqlite3
+*.db
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

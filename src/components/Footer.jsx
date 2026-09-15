@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import RescueLensLogo from './RescueLensLogo';
 import { Activity, Sparkles } from 'lucide-react';
 
-export default function Footer({ setActiveTab }) {
+export default function Footer() {
   return (
     <footer className="w-full bg-slate-100 dark:bg-[#070A12] border-t border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs py-10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -24,19 +25,19 @@ export default function Footer({ setActiveTab }) {
             <h4 className="font-bold text-slate-900 dark:text-slate-200 mb-3 text-xs tracking-wider uppercase font-mono">Platform Navigation</h4>
             <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-xs">
               <li>
-                <button onClick={() => setActiveTab('landing')} className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                <Link to="/" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors block">
                   System Overview
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => setActiveTab('report')} className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                <Link to="/report" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors block">
                   Report Emergency Scene
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => setActiveTab('command')} className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
+                <Link to="/command" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors block">
                   Command Center Dashboard
-                </button>
+                </Link>
               </li>
             </ul>
           </div>

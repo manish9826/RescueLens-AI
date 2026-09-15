@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShieldAlert, 
   AlertTriangle, 
@@ -14,12 +14,41 @@ import {
   Crosshair
 } from 'lucide-react';
 import SafetyDisclaimer from './SafetyDisclaimer';
+import { useAuth } from '../context/AuthContext';
 
-export default function CommandCenter({ incidents, onSelectReport, toggleCommanderChat }) {
+export default function CommandCenter({ incidents: propIncidents, setIncidents, onSelectReport, toggleCommanderChat }) {
   const [filterSeverity, setFilterSeverity] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedModalIncident, setSelectedModalIncident] = useState(null);
   const [activeTabSector, setActiveTabSector] = useState('grid');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  
+  const [nearbyResources, setNearbyResources] = useState([]);
+  const [loadingResources, setLoadingResources] = useState(false);
+
+  useEffect(() => {
+    const fetchIncidents = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch('/api/incidents');
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setIncidents(data.incidents);
+        } else {
+          setError('Failed to load incidents.');
+        }
+      } catch (err) {
+        setError('Network error.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchIncidents();
+  }, [setIncidents]);
+
+  const incidents = propIncidents || [];
 
   const activeCount = incidents.filter(i => i.status !== 'RESOLVED').length;
   const criticalCount = incidents.filter(i => i.severity === 'CRITICAL' && i.status !== 'RESOLVED').length;
@@ -94,7 +123,7 @@ export default function CommandCenter({ incidents, onSelectReport, toggleCommand
 
           <button
             onClick={toggleCommanderChat}
-            className="px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-cyan-600/20 transition-all"
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-cyan-600/30 transition-all active:scale-95 cursor-pointer"
           >
             <Bot className="w-4 h-4" />
             Commander AI
@@ -208,8 +237,8 @@ export default function CommandCenter({ incidents, onSelectReport, toggleCommand
                   className="absolute cursor-pointer group transform -translate-x-1/2 -translate-y-1/2"
                 >
                   <div className="relative flex items-center justify-center">
-                    <span className={`w-4 h-4 rounded-full ${inc.severity === 'CRITICAL' ? 'bg-red-500 beacon-red' : 'bg-orange-500 animate-ping'}`} />
-                    <span className="absolute w-2 h-2 rounded-full bg-white" />
+                    <span className={`w-4 h-4 rounded-full ${inc.severity === 'CRITICAL' ? 'bg-red-500 location-ping' : 'bg-orange-500 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]'}`} />
+                    <span className="absolute w-2 h-2 rounded-full bg-white shadow-sm" />
                   </div>
                   
                   <div className="hidden group-hover:block absolute top-6 left-1/2 -translate-x-1/2 bg-slate-950/95 border border-slate-700 px-3 py-1.5 rounded-xl shadow-2xl z-20 text-[11px] font-mono whitespace-nowrap text-cyan-300">
@@ -368,9 +397,63 @@ export default function CommandCenter({ incidents, onSelectReport, toggleCommand
               </ul>
             </div>
 
+            <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-bold text-cyan-600 dark:text-cyan-400 uppercase font-mono flex items-center gap-1.5">
+                  <MapPin className="w-4 h-4" /> Nearby Response Assets
+                </h4>
+                <button
+                  onClick={async () => {
+                    setLoadingResources(true);
+                    try {
+                      // Using a generalized/approximate coordinate to avoid exposing precise personal location publicly
+                      const approxLat = 28.6139;
+                      const approxLng = 77.2090; 
+                      const cat = selectedModalIncident.emergencyCategory || 'OTHER';
+                      const res = await fetch(`/api/nearby?lat=${approxLat}&lng=${approxLng}&radius=10000&category=${cat}`);
+                      const data = await res.json();
+                      if (data.success) {
+                        setNearbyResources(data.places || []);
+                      }
+                    } catch (e) {
+                      console.warn(e);
+                    }
+                    setLoadingResources(false);
+                  }}
+                  className="px-3 py-1.5 bg-cyan-50 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-400 text-[10px] font-bold rounded-lg border border-cyan-200 dark:border-cyan-800 hover:bg-cyan-100 dark:hover:bg-cyan-900 transition-colors"
+                >
+                  {loadingResources ? 'Scanning Area...' : 'Locate Nearest Assets'}
+                </button>
+              </div>
+
+              {nearbyResources.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                  {nearbyResources.slice(0, 4).map(place => (
+                    <div key={place.id} className="p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl flex flex-col justify-between h-full">
+                      <div>
+                        <div className="flex items-center justify-between gap-1 mb-1">
+                          <span className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">{place.icon} {place.name}</span>
+                          <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950 px-1.5 rounded">{place.distance}</span>
+                        </div>
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">{place.type}</div>
+                      </div>
+                      {place.phone && (
+                        <div className="mt-2 text-[10px] font-mono text-slate-600 dark:text-slate-300">
+                          📞 {place.phone}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
               <button
-                onClick={() => setSelectedModalIncident(null)}
+                onClick={() => {
+                  setSelectedModalIncident(null);
+                  setNearbyResources([]);
+                }}
                 className="px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs"
               >
                 Close Telemetry View

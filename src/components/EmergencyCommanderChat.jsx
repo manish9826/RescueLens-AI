@@ -117,7 +117,7 @@ export default function EmergencyCommanderChat({ isOpen, onClose, incidents = []
             <div className="flex items-center gap-2">
               <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Emergency Commander</h3>
               <span className="px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-950 border border-cyan-300 dark:border-cyan-500/40 text-[10px] font-mono text-cyan-800 dark:text-cyan-300 font-bold">
-                Gemini 3.6
+                Gemini 2.5
               </span>
             </div>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono block">
@@ -155,7 +155,7 @@ export default function EmergencyCommanderChat({ isOpen, onClose, incidents = []
               }`}
             >
               <div className="whitespace-pre-wrap font-sans">
-                {msg.text.split('\n').map((line, idx) => (
+                {(msg.text || '').split('\n').map((line, idx) => (
                   <p key={idx} className={line.startsWith('**') ? 'font-bold text-cyan-700 dark:text-cyan-300 mt-1' : 'mt-1'}>
                     {line}
                   </p>

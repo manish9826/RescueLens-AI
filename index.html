@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RescueLens AI - AI Emergency Intelligence Platform</title>
     <meta name="description" content="AI-powered emergency scene analysis and decision support platform driven by Google Gemini API. See the emergency. Understand the risk. Act faster." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#090D16" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +22,14 @@
           document.documentElement.classList.add('light');
         } else {
           document.documentElement.classList.add('dark');
+        }
+
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js').catch(function(err) {
+              console.warn('Service worker registration failed:', err);
+            });
+          });
         }
       })();
     </script>

@@ -1,0 +1,47 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="50%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#09090b" />
+    </linearGradient>
+    <linearGradient id="fire-glow" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.5" />
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+    </linearGradient>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="40" />
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  <!-- Distant Fire Glow -->
+  <circle cx="1400" cy="800" r="600" fill="url(#fire-glow)" filter="url(#blur)" />
+  <circle cx="400" cy="400" r="500" fill="url(#cyan-glow)" filter="url(#blur)" />
+  
+  <!-- City Skyline Silhouette -->
+  <path d="M0,1080 L0,700 L100,700 L100,600 L200,600 L200,650 L350,650 L350,500 L500,500 L500,750 L650,750 L650,550 L800,550 L800,800 L1000,800 L1000,600 L1150,600 L1150,450 L1300,450 L1300,750 L1450,750 L1450,650 L1600,650 L1600,750 L1750,750 L1750,600 L1920,600 L1920,1080 Z" fill="#020617" opacity="0.8" />
+  
+  <!-- Emergency Vehicle -->
+  <rect x="600" y="850" width="300" height="150" rx="20" fill="#1e293b" />
+  <rect x="850" y="900" width="100" height="100" rx="10" fill="#334155" />
+  <circle cx="650" cy="1000" r="40" fill="#0f172a" />
+  <circle cx="850" cy="1000" r="40" fill="#0f172a" />
+  
+  <!-- Flashing Lights -->
+  <path d="M620,850 L660,850 L640,830 Z" fill="#ef4444" />
+  <path d="M840,850 L880,850 L860,830 Z" fill="#06b6d4" />
+  <circle cx="640" cy="830" r="80" fill="#ef4444" opacity="0.3" filter="url(#blur)" />
+  <circle cx="860" cy="830" r="80" fill="#06b6d4" opacity="0.3" filter="url(#blur)" />
+
+  <!-- First Responder Silhouette -->
+  <path d="M1200,1080 L1200,900 L1220,880 L1240,900 L1240,1080 Z" fill="#020617" />
+  <circle cx="1220" cy="860" r="20" fill="#020617" />
+</svg>

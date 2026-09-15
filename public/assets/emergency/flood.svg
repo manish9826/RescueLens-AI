@@ -1,0 +1,25 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <filter id="wave"><feGaussianBlur stdDeviation="5" /></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  
+  <!-- Submerged Houses -->
+  <rect x="100" y="200" width="200" height="200" fill="#334155" />
+  <polygon points="100,200 200,100 300,200" fill="#1e293b" />
+  
+  <rect x="500" y="250" width="150" height="150" fill="#475569" />
+  <polygon points="500,250 575,180 650,250" fill="#334155" />
+  
+  <!-- Flood Water -->
+  <path d="M0,400 Q100,380 200,400 T400,400 T600,400 T800,400 L800,600 L0,600 Z" fill="#0ea5e9" opacity="0.8" filter="url(#wave)" />
+  
+  <!-- Rescue Boat -->
+  <path d="M350,450 L450,450 L470,420 L330,420 Z" fill="#ef4444" />
+  <rect x="380" y="400" width="40" height="20" fill="#f1f5f9" />
+  <circle cx="400" cy="390" r="10" fill="#facc15" />
+</svg>

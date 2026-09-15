@@ -1,0 +1,28 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+    <filter id="spark"><feGaussianBlur stdDeviation="8" /></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  
+  <!-- Broken Pole -->
+  <rect x="380" y="200" width="20" height="400" fill="#475569" transform="rotate(20 400 400)" />
+  <rect x="360" y="200" width="60" height="10" fill="#94a3b8" transform="rotate(20 400 400)" />
+  
+  <!-- Snapped Wires -->
+  <path d="M0,100 Q200,300 370,200" fill="none" stroke="#1e293b" stroke-width="4" />
+  <path d="M370,200 Q400,500 500,550" fill="none" stroke="#1e293b" stroke-width="4" />
+  
+  <!-- Sparks -->
+  <circle cx="500" cy="550" r="30" fill="#fde047" filter="url(#spark)" />
+  <path d="M500,550 L520,520 L510,510 L540,480" fill="none" stroke="#fef08a" stroke-width="4" filter="url(#spark)" />
+  <path d="M500,550 L480,530 L490,510 L470,490" fill="none" stroke="#fef08a" stroke-width="4" filter="url(#spark)" />
+  
+  <!-- Utility Truck -->
+  <rect x="600" y="450" width="150" height="80" rx="10" fill="#f59e0b" />
+  <circle cx="630" cy="530" r="20" fill="#0f172a" />
+  <circle cx="720" cy="530" r="20" fill="#0f172a" />
+</svg>

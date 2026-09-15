@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes scan {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(500px); }
+  100% { transform: translateY(0); }
+}
+
 @layer base {
   :root {
     --bg-main: #f8fafc;
@@ -9,7 +15,7 @@
   }
 
   html.dark {
-    --bg-main: #090d16;
+    --bg-main: #0b1120;
     --text-main: #f8fafc;
   }
 
@@ -48,20 +54,20 @@ html.dark .glass-panel {
 }
 
 html.dark .glass-card {
-  background: linear-gradient(135deg, rgba(21, 30, 49, 0.75) 0%, rgba(13, 19, 33, 0.85) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .glass-card:hover {
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 8px 30px -4px rgba(59, 130, 246, 0.12);
-  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 12px 40px -8px rgba(59, 130, 246, 0.15), 0 0 15px rgba(59, 130, 246, 0.05);
+  transform: translateY(-3px);
 }
 
 html.dark .glass-card:hover {
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 12px 35px -10px rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 15px 40px -10px rgba(6, 182, 212, 0.25), 0 0 20px rgba(6, 182, 212, 0.1);
 }
 
 /* Custom Tactical Background Grids */
@@ -90,15 +96,18 @@ html.dark .bg-radial-gradient {
 @keyframes radarSweep {
   0% {
     top: 0%;
-    opacity: 0.9;
+    opacity: 0.7;
+    filter: blur(1px);
   }
   50% {
-    top: 96%;
+    top: 98%;
     opacity: 1;
+    filter: blur(0px);
   }
   100% {
     top: 0%;
-    opacity: 0.9;
+    opacity: 0.7;
+    filter: blur(1px);
   }
 }
 
@@ -106,28 +115,130 @@ html.dark .bg-radial-gradient {
   position: absolute;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent 0%, #06b6d4 50%, transparent 100%);
-  box-shadow: 0 0 15px #06b6d4;
-  animation: radarSweep 2.2s ease-in-out infinite;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.8) 30%, #22d3ee 50%, rgba(6, 182, 212, 0.8) 70%, transparent 100%);
+  box-shadow: 0 0 25px 2px rgba(34, 211, 238, 0.8), 0 0 10px rgba(34, 211, 238, 0.5);
+  animation: radarSweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  border-radius: 50%;
 }
 
 /* Pulse Beacon */
 @keyframes pulseBeacon {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
   }
-  70% {
-    transform: scale(1.05);
-    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0.1);
   }
   100% {
-    transform: scale(0.95);
+    transform: scale(0.9);
     box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
   }
 }
 
 .beacon-red {
-  animation: pulseBeacon 2s infinite;
+  animation: pulseBeacon 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* Location Radar Ping */
+@keyframes locationPing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.7);
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+    box-shadow: 0 0 0 20px rgba(34, 211, 238, 0);
+  }
+}
+
+.location-ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  animation: locationPing 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* ========================================================================= */
+/* ACCESSIBILITY MODE SPECIFICATIONS                                         */
+/* ========================================================================= */
+
+/* Focus Visible: Clear Keyboard Navigation */
+:focus-visible {
+  outline: 3px solid #22d3ee !important;
+  outline-offset: 2px !important;
+}
+
+/* 1. Large Text Mode */
+html.a11y-large-text {
+  font-size: 118% !important;
+}
+html.a11y-large-text h1 {
+  font-size: 2.8rem !important;
+  line-height: 1.15 !important;
+}
+html.a11y-large-text h2 {
+  font-size: 2.2rem !important;
+}
+html.a11y-large-text p, 
+html.a11y-large-text span, 
+html.a11y-large-text button,
+html.a11y-large-text a,
+html.a11y-large-text li {
+  letter-spacing: 0.02em !important;
+}
+
+/* 2. High Contrast Mode */
+html.a11y-high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+html.a11y-high-contrast body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+html.a11y-high-contrast .glass-panel,
+html.a11y-high-contrast .glass-card,
+html.a11y-high-contrast section,
+html.a11y-high-contrast header,
+html.a11y-high-contrast footer,
+html.a11y-high-contrast div[class*="bg-"] {
+  background-color: #000000 !important;
+  border-color: #facc15 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+html.a11y-high-contrast button,
+html.a11y-high-contrast a[class*="bg-"] {
+  border: 2px solid #facc15 !important;
+  font-weight: 900 !important;
+}
+html.a11y-high-contrast .text-slate-400,
+html.a11y-high-contrast .text-slate-500 {
+  color: #fef08a !important;
+}
+
+/* 3. Reduced Motion Mode */
+html.a11y-reduced-motion *,
+html.a11y-reduced-motion *::before,
+html.a11y-reduced-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* 4. Large Emergency Buttons Mode */
+html.a11y-large-buttons button,
+html.a11y-large-buttons a[class*="rounded"] {
+  min-height: 56px !important;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  font-size: 1.05rem !important;
+  font-weight: 900 !important;
+}
+

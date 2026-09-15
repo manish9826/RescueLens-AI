@@ -1,0 +1,33 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#082f49" />
+    </linearGradient>
+    <filter id="neon"><feGaussianBlur stdDeviation="8" /></filter>
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#0ea5e9" stroke-width="1" opacity="0.2"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  
+  <!-- Server Racks -->
+  <rect x="200" y="150" width="100" height="350" rx="5" fill="#0f172a" stroke="#0ea5e9" stroke-width="2" />
+  <rect x="220" y="200" width="60" height="15" fill="#3b82f6" />
+  <rect x="220" y="240" width="60" height="15" fill="#ef4444" filter="url(#neon)" />
+  <rect x="220" y="280" width="60" height="15" fill="#3b82f6" />
+  
+  <rect x="500" y="150" width="100" height="350" rx="5" fill="#0f172a" stroke="#0ea5e9" stroke-width="2" />
+  <rect x="520" y="200" width="60" height="15" fill="#ef4444" filter="url(#neon)" />
+  <rect x="520" y="240" width="60" height="15" fill="#3b82f6" />
+  <rect x="520" y="280" width="60" height="15" fill="#3b82f6" />
+  
+  <!-- Connection Lines -->
+  <path d="M300,250 L500,210" fill="none" stroke="#ef4444" stroke-width="4" stroke-dasharray="10 10" filter="url(#neon)" />
+  <path d="M300,290 L500,290" fill="none" stroke="#0ea5e9" stroke-width="4" />
+  
+  <!-- Security Shield Broken -->
+  <path d="M400,50 L480,100 L480,200 Q480,300 400,380 Q320,300 320,200 L320,100 Z" fill="none" stroke="#ef4444" stroke-width="8" opacity="0.6" filter="url(#neon)" />
+  <path d="M370,180 L430,240 M430,180 L370,240" stroke="#ef4444" stroke-width="10" filter="url(#neon)" />
+</svg>

@@ -1,0 +1,30 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="15" /></filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)" />
+  <polygon points="0,600 800,600 800,400 0,400" fill="#334155" />
+  
+  <!-- Ambulance -->
+  <rect x="200" y="250" width="400" height="200" rx="15" fill="#f8fafc" />
+  <path d="M450,250 L550,250 L600,350 L600,450 L450,450 Z" fill="#e2e8f0" />
+  <!-- Cross -->
+  <rect x="300" y="300" width="80" height="20" fill="#ef4444" />
+  <rect x="330" y="270" width="20" height="80" fill="#ef4444" />
+  <!-- Lights -->
+  <circle cx="250" cy="240" r="50" fill="#ef4444" opacity="0.4" filter="url(#glow)" />
+  <circle cx="550" cy="240" r="50" fill="#3b82f6" opacity="0.4" filter="url(#glow)" />
+  
+  <circle cx="280" cy="450" r="30" fill="#0f172a" />
+  <circle cx="520" cy="450" r="30" fill="#0f172a" />
+  
+  <!-- Stretcher -->
+  <rect x="350" y="480" width="120" height="10" fill="#94a3b8" />
+  <!-- EMT -->
+  <rect x="300" y="420" width="20" height="60" fill="#020617" />
+  <circle cx="310" cy="410" r="12" fill="#0ea5e9" />
+</svg>
