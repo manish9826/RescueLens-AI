@@ -229,10 +229,21 @@ export default function App() {
         body: JSON.stringify(payload)
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get("content-type");
+      let data;
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.error("Non-JSON response from server:", text.substring(0, 200));
+        if (res.status === 413) {
+          throw new Error("The image file is too large. Please upload a smaller image.");
+        }
+        throw new Error(`Server connection issue (Status: ${res.status}). Please ensure the backend is running and try again.`);
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to analyze emergency scene.');
+        throw new Error(data?.error || 'Failed to analyze emergency scene.');
       }
 
       setCurrentAnalysis(data);
