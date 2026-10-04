@@ -16,7 +16,7 @@ import { getDb } from './db.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 // Rate limiting for general API endpoints
 const apiLimiter = rateLimit({
