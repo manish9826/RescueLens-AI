@@ -12,15 +12,17 @@ router.get('/', optionalAuthMiddleware, async (req, res) => {
 
     if (req.user && req.user.id) {
       // Authenticated user: Only retrieve reports belonging to this user
-      incidents = await db.all(
+      const [rows] = await db.execute(
         'SELECT * FROM incidents WHERE user_id = ? ORDER BY created_at DESC',
         [req.user.id]
       );
+      incidents = rows;
     } else {
       // Unauthenticated / public: Only return public or demo incidents (never private user data)
-      incidents = await db.all(
+      const [rows] = await db.execute(
         "SELECT * FROM incidents WHERE user_id = 'public_user' OR user_id = 'demo_user' ORDER BY created_at DESC LIMIT 10"
       );
+      incidents = rows;
     }
     
     // Parse JSON arrays stored as strings (risks, immediateActions, etc.)
@@ -42,7 +44,8 @@ router.get('/', optionalAuthMiddleware, async (req, res) => {
 router.get('/:id', optionalAuthMiddleware, async (req, res) => {
   try {
     const db = await getDb();
-    const incident = await db.get('SELECT * FROM incidents WHERE id = ?', [req.params.id]);
+    const [rows] = await db.execute('SELECT * FROM incidents WHERE id = ?', [req.params.id]);
+    const incident = rows[0];
 
     if (!incident) {
       return res.status(404).json({ error: 'Incident report not found.' });
@@ -91,7 +94,7 @@ router.post('/', optionalAuthMiddleware, async (req, res) => {
 
     const db = await getDb();
     
-    await db.run(`
+    await db.execute(`
       INSERT INTO incidents (
         id, user_id, incidentType, emergencyCategory, severity, priorityScore,
         confidence, summary, dangerLevel, immediateActions, doNotDo, rescueResources,

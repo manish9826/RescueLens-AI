@@ -38,7 +38,8 @@ router.post('/register', async (req, res) => {
 
     const db = await getDb();
     
-    const existingUser = await db.get('SELECT * FROM users WHERE email = ?', [cleanEmail]);
+    const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [cleanEmail]);
+    const existingUser = rows[0];
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists with this email address.' });
     }
@@ -47,7 +48,7 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
     const id = Date.now().toString();
 
-    await db.run(
+    await db.execute(
       'INSERT INTO users (id, full_name, email, password_hash) VALUES (?, ?, ?, ?)',
       [id, name, email, hashedPassword]
     );
@@ -75,7 +76,8 @@ router.post('/login', async (req, res) => {
     }
 
     const db = await getDb();
-    const user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
+    const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    const user = rows[0];
     
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password.' });
@@ -135,7 +137,8 @@ export const optionalAuthMiddleware = (req, res, next) => {
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     const db = await getDb();
-    const user = await db.get('SELECT id, full_name, email FROM users WHERE id = ?', [req.user.id]);
+    const [rows] = await db.execute('SELECT id, full_name, email FROM users WHERE id = ?', [req.user.id]);
+    const user = rows[0];
     
     if (!user) {
       return res.status(404).json({ error: 'User not found.' });
@@ -151,13 +154,14 @@ router.get('/me', authMiddleware, async (req, res) => {
 router.get('/profile', authMiddleware, async (req, res) => {
   try {
     const db = await getDb();
-    const user = await db.get('SELECT id, full_name, email, created_at FROM users WHERE id = ?', [req.user.id]);
+    const [rows] = await db.execute('SELECT id, full_name, email, created_at FROM users WHERE id = ?', [req.user.id]);
+    const user = rows[0];
     
     if (!user) {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    const incidentsStats = await db.get(`
+    const [statRows] = await db.execute(`
       SELECT 
         COUNT(*) as totalIncidents,
         SUM(CASE WHEN severity = 'CRITICAL' THEN 1 ELSE 0 END) as criticalIncidents,
@@ -166,6 +170,7 @@ router.get('/profile', authMiddleware, async (req, res) => {
       FROM incidents
       WHERE user_id = ?
     `, [req.user.id]);
+    const incidentsStats = statRows[0];
     
     res.json({
       success: true,
@@ -194,7 +199,7 @@ router.put('/profile', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'Name must be between 2 and 80 characters.' });
     }
     const db = await getDb();
-    await db.run('UPDATE users SET full_name = ? WHERE id = ?', [name.trim(), req.user.id]);
+    await db.execute('UPDATE users SET full_name = ? WHERE id = ?', [name.trim(), req.user.id]);
     res.json({ success: true, message: 'Profile updated successfully.' });
   } catch (err) {
     console.error('Profile update error:', err);
