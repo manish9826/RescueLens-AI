@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://rescuelens-ai-rxrj.onrender.com/api/:path*"
+    }
+  ]
+}
